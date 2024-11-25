@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Currículo</title>
+    <link rel= "stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity= "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin= "anonymous" ></head>
+<body>
+    <h1>Cadastro de Currículo</h1>
+    <form method="POST" action="{{ url_for('cadastro') }}">
+        {{ form.hidden_tag() }}  <!-- Campo CSRF -->
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            {{ form.nome(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone (Opcional):</label>
+            {{ form.telefone(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            {{ form.email(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="endereco_web">Endereço Web (Opcional):</label>
+            {{ form.endereco_web(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="experiencia">Experiência Profissional:</label>
+            {{ form.experiencia_profissional(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</body>
+</html>
