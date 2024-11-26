@@ -14,7 +14,7 @@ from wtforms.validators import DataRequired, Email, ValidationError
 from flask_wtf.csrf import CSRFError
 
 # Importando o formulário de cadastro
-from forms import Cadastro_curriculoForm
+from forms import Cadastro_curriculoForm,BuscaForm
 
 csrf = CSRFProtect()
 app = Flask(__name__)
@@ -154,6 +154,24 @@ def excluir_curriculo(curriculo_id):
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
     return f"Erro CSRF: {e.description}", 400
+
+@app.route('/buscar_curriculos', methods=['GET', 'POST'])
+def buscar_curriculos():
+    form = BuscaForm()
+    if form.validate_on_submit():
+        termo = form.termo_busca.data
+        # Lógica para buscar currículos
+        return redirect(url_for('resultado_busca', termo=termo))
+    return render_template('buscar_curriculos.html', form=form)
+
+@app.route('/resultado_busca/<termo>')
+def resultado_busca(termo):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM curriculos WHERE nome LIKE ?', (f'%{termo}%',))
+    resultados = cursor.fetchall()
+    conn.close()
+    return render_template('resultado_busca.html', resultados=resultados, termo=termo)
 
 
 # Função principal para rodar o app

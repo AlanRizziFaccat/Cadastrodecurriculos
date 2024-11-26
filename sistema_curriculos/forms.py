@@ -14,3 +14,7 @@ class Cadastro_curriculoForm(FlaskForm):
     def validate_telefone(self, field):
         if field.data and not field.data.isnumeric():
             raise ValidationError("O telefone deve conter apenas números.")
+
+class BuscaForm(FlaskForm):
+    termo_busca = StringField('Buscar', validators=[DataRequired()])
+    submit = SubmitField('Buscar')
